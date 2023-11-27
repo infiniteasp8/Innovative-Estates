@@ -14,7 +14,11 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }}, {timestamps: true}
+    },avatar:{
+        type: String,
+        default: 'https://wallpapers.com/images/hd/cute-cat-eyes-profile-picture-uq3edzmg1guze2hh.jpg'
+    },
+}, {timestamps: true}
     );
     const User = mongoose.model('User', userSchema);
     export default User;
