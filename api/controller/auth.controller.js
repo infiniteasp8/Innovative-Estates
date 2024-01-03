@@ -49,6 +49,31 @@ export const signin = async (req, res, next) => {
         })
         .status(200)
         .json(rest);
+        const jwt = require('jsonwebtoken');
+
+// Step 1: Decode the token
+const decoded = jwt.decode(token, { complete: true });
+
+// Step 2: Check expiration time
+if (decoded && decoded.payload.exp) {
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  if (currentTimestamp > decoded.payload.exp) {
+    console.log('Token has expired');
+  } else {
+    console.log('Token is still valid');
+  }
+} else {
+  console.log('Invalid token format');
+}
+
+// Step 3: (Optional) Check Not Before Time
+if (decoded && decoded.payload.nbf) {
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  if (currentTimestamp < decoded.payload.nbf) {
+    console.log('Token is not yet valid');
+  }
+}
+
     }
     else{
       // This will create the password containing 0-9 numbers and a-z letters and will of type 0.bda23raffs but we include only last 8 and we will double them by adding same. 16 charchter password
