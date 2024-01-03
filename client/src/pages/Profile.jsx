@@ -10,10 +10,11 @@ export default function Profile() {
   const [filePerc, setFilePerc] = useState(0);
   const [formData, setFormData] = useState({});
   const [fileUploadError, setFileUploadError] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
   // console.log(file);
-  const { currentUser } = useSelector((state) => state.user);
-  console.log(formData);
+  const { currentUser,loading, error } = useSelector((state) => state.user);
+  // console.log(formData);
 
   useEffect(()=>{
       if(file) {
@@ -126,14 +127,17 @@ export default function Profile() {
           className="border p-3 rounded-lg"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
-          Update
+        <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
+          {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
       <div className="mt-5 flex justify-between">
         <span className="text-red-700 cursor-pointer">Delete account</span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
+      <p className="text-red-700 mt-5"> {error ? error : '' }</p>
+      <p className="text-green-700 mt-5"> {updateSuccess ? 'User updated successfully' : '' }</p>
+      
     </div>
   );
 }
